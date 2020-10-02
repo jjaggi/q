@@ -1,0 +1,158 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+int out[100][4];int flag=0;
+void lone(int val,int r,int c,int pos)
+{
+	if(val!=0)
+	{
+		out[flag][0]=r;
+		out[flag][1]=c;
+		out[flag][2]=val;
+		out[flag][3]=pos;
+		flag++;
+	}
+	
+}
+
+int main() {
+	int r,c,no,i,j;
+	cin>>r>>c>>no;
+	int arr[3][no];
+	for (i=0;i<no;i++)
+	{
+		cin>>arr[0][i]>>arr[1][i]>>arr[2][i];
+	}
+	int initial[2];
+	cin>>initial[0]>>initial[1];
+	
+	int farr[r][c];
+	for(i=0;i<r+1;i++)
+	{
+		for(j=0;j<c+1;j++)
+		{
+			farr[i][j]=0;
+		}
+	}
+	for(i=0;i<r;i++)
+	{
+		for(j=0;j<c;j++)
+		{
+			farr[i][j]=0;
+			
+		}
+		
+	}
+	
+	for(i=0;i<no;i++)
+	{
+		
+		{
+			farr[arr[0][i]][arr[1][i]]=arr[2][i];
+			
+		}
+	}
+	//works
+
+	
+	int red=0;int d;
+	lone(farr[initial[0]][initial[1]],initial[0],initial[1],1);
+	farr[initial[0]][initial[1]]=-1;
+	for(i=1;i<100;i++)
+	{
+	    for(d=0;d<((2*i)-1);d++)
+	    {
+	        if(farr[initial[0]+1][initial[1]]>=0 && farr[initial[0]+i][initial[1]]<=1000 && (initial[0]+1)>=0 && (initial[1])>=0 && (initial[0]+1)<r && (initial[1])<c )
+	        {
+	        	lone(farr[initial[0]+1][initial[1]],initial[0]+1,initial[1],1);
+	        	farr[initial[0]+1][initial[1]]=-1;
+	        
+	        	
+			}
+			else
+			{
+				red++;break;
+			}
+			initial[0]=initial[0]+1;//cout<<initial[0]<<" "<<initial[1]<<endl;
+		}if(red!=0)
+		{
+			break;
+		}
+		
+		for(d=0;d<((2*i)-1);d++)
+		{
+			if(farr[initial[0]][initial[1]+1]>=0 && farr[initial[0]][initial[1]+1]<=1000 && (initial[0])>=0 && (initial[1]+1)>=0 && (initial[0])<r && (initial[1]+1)<c )
+			{
+				lone(farr[initial[0]][initial[1]+1],initial[0],initial[1]+1,2);
+				farr[initial[0]][initial[1]+1]=-1;
+				
+			}
+			else
+			{
+				red++;break;
+			}
+			initial[1]=initial[1]+1;
+		}if(red!=0)
+		{
+			break;
+		}
+		for(d=0;d<i*2;d++)
+		{
+			if(farr[initial[0]-1][initial[1]]>=0 && farr[initial[0]-1][initial[1]]<=1000 && (initial[0]-1)>=0 && (initial[1])>=0 && (initial[0]-1)<r && (initial[1])<c )
+	        {
+	        	lone(farr[initial[0]-1][initial[1]],initial[0]-1,initial[1],3);
+	        	farr[initial[0]-1][initial[1]]=-1;
+	        	
+	        	
+			}
+		else
+			{
+				red++;break;
+			}
+			initial[0]=initial[0]-1;
+		}	if(red!=0)
+		{
+			break;
+		}
+		for(d=0;d<i*2;d++)
+		{
+			if(farr[initial[0]][initial[1]-1]>=0 && farr[initial[0]][initial[1]-1]<=1000 && (initial[0])>=0 && (initial[1]-1)>=0 && (initial[0])<r && (initial[1]-1)<c )
+			{
+				lone(farr[initial[0]][initial[1]-1],initial[0],initial[1]-1,4);
+				farr[initial[0]][initial[1]-1]=-1;
+			}
+			else
+			{
+				red++;break;
+			}
+			initial[1]=initial[1]-1;
+		}if(red!=0)
+		{
+			break;
+		}
+	    }
+	    
+//	    for(i=0;i<r;i++)
+//	{
+//		for(j=0;j<c;j++)
+//		{
+//			cout<<farr[i][j]<<" ";
+//			
+//		}
+//		cout<<endl;}
+		
+		for(i=0;i<flag;i++)
+	{
+		for(j=0;j<4;j++)
+		{
+			cout<<out[i][j]<<" ";
+			
+		}
+		cout<<endl;}
+	
+//	cout<<flag;
+	
+	return 0;
+	
+}
+
